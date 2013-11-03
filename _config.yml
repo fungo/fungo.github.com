@@ -1,0 +1,4 @@
+name: 技术 & 生活
+markdown: redcarpet
+pygments: true
+permalink: pretty
