@@ -16,13 +16,18 @@ categories: 技术 OpenStack
 在安装的过程种遇到了一些问题
 
 1. 安装慢，一直失败
+
     安装非常之慢，从来没有一次成功过，都是在下载的过程中失败的。后来查看 ` ./run_tests.sh` 脚本，发现真正的安装是在 `tools / install_venv.py` 脚本里完成的，用 `pip install` 来做的，所以就手动安装这些依赖。先把 pip 包下载下来，然后 pip 命令安装。
+
 2. 文档信息不全
+
     有些准备工作没有提到，比如 Horizon 用 less 来生成 css，less 需要安装 nodejs 来支持，还有默认情况下 Ubuntu 系统是没有一些头文件的，而在安装依赖的过程中，会编译一些库，需要头文件，没有话直接报错。上面提到的问题，提前安装必要的软件即可解决
         
         apt-get install nodejs
         apt-get install python-dev libmxml-dev
+
 3. 依赖库版本有问题
+
     安装完成后，环境能跑起来，有登录界面，并且连上了已有的 keystone endpoint，但是无法登录，后来发现是版本问题，依赖文件 `pip-requires` 所指的包的版本和  keystone endpoint 环境下的包版本不一致。可是我测试环境安装的是 Grizzly 版，horizon clone 出来的包也是 Grizzly 生版，可是两者的依赖却不一样，郁闷，索性放弃这种方法。
 
 尝试二， 在现有环境安装(成功，不推荐)
@@ -38,12 +43,14 @@ categories: 技术 OpenStack
 详细的安装过程  
 
 1. 虚拟机环境准备
+
     这个过程和一般的 OpenStack 安装节点环境准备一样，包括源的添加，系统的更新
 
 2. 安装包
 
         apt-get install nodejs
         apt-get install openstack-dashboard
+
 3. clone 代码
 
         git clone https://github.com/openstack/horizon
@@ -51,6 +58,7 @@ categories: 技术 OpenStack
         git checkout stable/grizzly
 
 4. 关闭 apache 服务
+
     不需要这个，就必要让它一直跑着浪费资源
     
         service apache2 stop
